@@ -1,0 +1,20 @@
+<h1>Listing snort_rule_types</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+
+<% for snort_rule_type in @snort_rule_types %>
+  <tr>
+    <td><%=h snort_rule_type.name %></td>
+    <td><%= link_to 'Show', snort_rule_type %></td>
+    <td><%= link_to 'Edit', edit_snort_rule_type_path(snort_rule_type) %></td>
+    <td><%= link_to 'Destroy', snort_rule_type, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New snort_rule_type', new_snort_rule_type_path %>

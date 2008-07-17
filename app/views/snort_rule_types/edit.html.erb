@@ -1,0 +1,17 @@
+<h1>Editing snort_rule_type</h1>
+
+<%= error_messages_for :snort_rule_type %>
+
+<% form_for(@snort_rule_type) do |f| %>
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @snort_rule_type %> |
+<%= link_to 'Back', snort_rule_types_path %>

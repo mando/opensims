@@ -1,0 +1,13 @@
+<p>
+  <b>Description:</b>
+  <%=h @snort_rule.description %>
+</p>
+
+<p>
+  <b>Snortruletype:</b>
+  <%=h @snort_rule.snortruletype_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_snort_rule_path(@snort_rule) %> |
+<%= link_to 'Back', snort_rules_path %>

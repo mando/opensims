@@ -1,0 +1,2 @@
+module SnortRulesHelper
+end

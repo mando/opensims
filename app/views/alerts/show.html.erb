@@ -1,0 +1,43 @@
+<p>
+  <b>Source host:</b>
+  <%=h @alert.source_host_id %>
+</p>
+
+<p>
+  <b>Source host port:</b>
+  <%=h @alert.source_host_port %>
+</p>
+
+<p>
+  <b>Dest host:</b>
+  <%=h @alert.dest_host_id %>
+</p>
+
+<p>
+  <b>Dest host port:</b>
+  <%=h @alert.dest_host_port %>
+</p>
+
+<p>
+  <b>Alert time:</b>
+  <%=h @alert.alert_time %>
+</p>
+
+<p>
+  <b>Reporting host:</b>
+  <%=h @alert.reporting_host_id %>
+</p>
+
+<p>
+  <b>Agent:</b>
+  <%=h @alert.agent_id %>
+</p>
+
+<p>
+  <b>Snort rule:</b>
+  <%=h @alert.snort_rule_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_alert_path(@alert) %> |
+<%= link_to 'Back', alerts_path %>

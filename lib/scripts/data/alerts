@@ -1,0 +1,10 @@
+06/10/08-00:39:08.971376  [**] [1:2002750:4]  <eth0> BLEEDING-EDGE POLICY Reserved IP Space Traffic - Bogon Nets 2 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 117.197.64.209:64299 -> 64.128.30.233:25
+06/10/08-00:39:37.548893  [**] [1:2002750:4]  <eth0> BLEEDING-EDGE POLICY Reserved IP Space Traffic - Bogon Nets 2 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 98.199.238.163:41442 -> 64.128.30.240:443
+06/10/08-00:40:16.032128  [**] [1:2002750:4]  <eth0> BLEEDING-EDGE POLICY Reserved IP Space Traffic - Bogon Nets 2 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 79.186.99.194:3604 -> 64.128.30.234:25
+06/10/08-00:40:16.159681  [**] [1:2002750:4]  <eth0> BLEEDING-EDGE POLICY Reserved IP Space Traffic - Bogon Nets 2 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 78.184.34.155:18405 -> 64.128.30.225:25
+06/10/08-00:40:33.099431  [**] [1:2002750:4]  <eth0> BLEEDING-EDGE POLICY Reserved IP Space Traffic - Bogon Nets 2 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 92.83.108.78:4051 -> 64.128.30.225:25
+06/10/08-00:41:18.578098  [**] [1:2001669:2]  <eth0> BLEEDING-EDGE Web Proxy GET Request [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 60.172.219.2:3031 -> 64.128.30.22:80
+06/10/08-00:41:18.578098  [**] [1:2001669:2]  <eth0> BLEEDING-EDGE Web Proxy GET Request [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 60.172.219.2:3031 -> 64.128.30.22:80
+06/10/08-00:41:18.578223  [**] [1:2001669:2]  <eth0> BLEEDING-EDGE Web Proxy GET Request [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 60.172.219.2:3031 -> 64.128.30.22:80
+06/10/08-00:41:19.960237  [**] [1:2003:8]  <eth0> MS-SQL Worm propagation attempt [**] [Classification: Misc Attack] [Priority: 2] {UDP} 61.128.186.202:2473 -> 64.128.30.22:1434
+06/10/08-00:41:19.960237  [**] [1:2004:7]  <eth0> MS-SQL Worm propagation attempt OUTBOUND [**] [Classification: Misc Attack] [Priority: 2] {UDP} 61.128.186.202:2473 -> 64.128.30.22:1434

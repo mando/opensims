@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  source_host_id: 
+  source_host_port: 
+  dest_host_id: 
+  dest_host_port: 
+  alert_time: 2008-07-16 19:09:10
+  reporting_host_id: 
+  agent_id: 
+  snort_rule_id: 
+
+two:
+  source_host_id: 
+  source_host_port: 
+  dest_host_id: 
+  dest_host_port: 
+  alert_time: 2008-07-16 19:09:10
+  reporting_host_id: 
+  agent_id: 
+  snort_rule_id: 

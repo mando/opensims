@@ -1,0 +1,52 @@
+<h1>Editing alert</h1>
+
+<%= error_messages_for :alert %>
+
+<% form_for(@alert) do |f| %>
+  <p>
+    <b>Source host</b><br />
+    <%= f.text_field :source_host_id %>
+  </p>
+
+  <p>
+    <b>Source host port</b><br />
+    <%= f.text_field :source_host_port %>
+  </p>
+
+  <p>
+    <b>Dest host</b><br />
+    <%= f.text_field :dest_host_id %>
+  </p>
+
+  <p>
+    <b>Dest host port</b><br />
+    <%= f.text_field :dest_host_port %>
+  </p>
+
+  <p>
+    <b>Alert time</b><br />
+    <%= f.datetime_select :alert_time %>
+  </p>
+
+  <p>
+    <b>Reporting host</b><br />
+    <%= f.text_field :reporting_host_id %>
+  </p>
+
+  <p>
+    <b>Agent</b><br />
+    <%= f.text_field :agent_id %>
+  </p>
+
+  <p>
+    <b>Snort rule</b><br />
+    <%= f.text_field :snort_rule_id %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @alert %> |
+<%= link_to 'Back', alerts_path %>

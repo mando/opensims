@@ -1,0 +1,17 @@
+<h1>Editing host</h1>
+
+<%= error_messages_for :host %>
+
+<% form_for(@host) do |f| %>
+  <p>
+    <b>Ip address</b><br />
+    <%= f.text_field :ip_address %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @host %> |
+<%= link_to 'Back', hosts_path %>

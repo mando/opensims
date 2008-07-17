@@ -1,0 +1,17 @@
+<h1>Editing country</h1>
+
+<%= error_messages_for :country %>
+
+<% form_for(@country) do |f| %>
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @country %> |
+<%= link_to 'Back', countries_path %>
