@@ -19,8 +19,6 @@ File.open("data/alerts").each do |line|
       :agent_id           => agent.id,
       :snort_rule_id      => rule.id
     )
-    puts "Sleeping"
-    sleep 10
     puts "TIME: #{time} DESC: #{desc} TRANSPORT: #{transport} SRC_IP: #{src_ip} SRC_PORT: #{src_port} DEST_IP: #{dest_ip} DEST_PORT: #{dest_port}"
   end
 end 
