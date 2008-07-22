@@ -2,9 +2,8 @@ class AlertsController < ApplicationController
   # GET /alerts
   # GET /alerts.xml
   def index
-    @alerts = Alert.find(:all, :conditions => ['created_at >= ?', 1.minute.ago.strftime("%Y-%m-%d %H:%M:%S")], :limit => 10, :include => [ { :source_host => :city }, { :destination_host => :city }] )
+    @alerts = Alert.find(:all, :conditions => ['created_at >= ?', 1.minute.ago.to_s(:db)], :limit => 10, :include => [ { :source_host => :city }, { :destination_host => :city }] )
 
-    source_hosts = 
     @map = GMap.new("map_div")
     @map.control_init(:large_map => true,:map_type => true)
     @map.center_zoom_init([75.5,-42.56],2)
