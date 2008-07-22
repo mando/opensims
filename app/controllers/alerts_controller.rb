@@ -4,9 +4,23 @@ class AlertsController < ApplicationController
   def index
     @alerts = Alert.find(:all, :conditions => ['created_at >= ?', 1.minute.ago.to_s(:db)], :limit => 10, :include => [ { :source_host => :city }, { :destination_host => :city }] )
 
+    source_hosts      = @alerts.collect { |a| a.source_host }
+    destination_hosts = @alerts.collect { |a| a.destination_host } 
+  
+    # Fortunately, these will always line up since city will always be undef for both or neither
+    # There's got to be a better way: FIXME 
+    latitudes  = source_hosts.collect { |h| h.city.lat if !h.city.nil? }.compact.sort
+    longitudes = source_hosts.collect { |h| h.city.long if !h.city.nil? }.compact.sort
+
     @map = GMap.new("map_div")
     @map.control_init(:large_map => true,:map_type => true)
-    @map.center_zoom_init([75.5,-42.56],2)
+    if (latitudes.count > 0)  
+      @map.center_zoom_on_bounds_init([
+        [latitudes.first, longitudes.first], 
+        [latitudes.last,  longitudes.last]])
+    else 
+      @map.center_zoom_init([40.713956, -0.156250],2)
+    end  
     #@map.overlay_init(GMarker.new([75.6,-42.467],:title => "Hello", :info_window => "Info! Info!"))
     
     respond_to do |format|
