@@ -1,9 +1,10 @@
 class CreateCities < ActiveRecord::Migration
   def self.up
     create_table :cities do |t|
-      t.string :name
-      t.integer :country_id
-
+      t.string      :name
+      t.integer     :country_id
+      t.string      :lat
+      t.string      :long
       t.timestamps
     end
   end
