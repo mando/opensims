@@ -1,4 +1,5 @@
 #!/usr/bin/env /Users/mando/Projects/opensims2/scratch/script/runner
+
 require 'geoip_city'
 g = GeoIPCity::Database.new(RAILS_ROOT + '/lib/GeoLiteCity.dat')
 
