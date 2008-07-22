@@ -2,8 +2,13 @@ class AlertsController < ApplicationController
   # GET /alerts
   # GET /alerts.xml
   def index
-    @alerts = Alert.find(:all)
+    @alerts = Alert.find(:all, :conditions => ['created_at >= ?', 1.minute.ago.strftime("%Y-%m-%d %H:%M:%S")], :limit => 10)
 
+    @map = GMap.new("map_div")
+    @map.control_init(:large_map => true,:map_type => true)
+    @map.center_zoom_init([75.5,-42.56],2)
+    #@map.overlay_init(GMarker.new([75.6,-42.467],:title => "Hello", :info_window => "Info! Info!"))
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @alerts }
