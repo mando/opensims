@@ -21,6 +21,10 @@ class AlertsController < ApplicationController
       longitudes << dest_coords[1]
       lines << GPolyline.new([source_coords, dest_coords])
     end
+
+    latitudes.sort!
+    longitudes.sort!
+    
     @map = GMap.new("map_div")
     @map.control_init(:large_map => true,:map_type => true)
     if (latitudes.count > 0)  
