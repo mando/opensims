@@ -2,17 +2,25 @@ class AlertsController < ApplicationController
   # GET /alerts
   # GET /alerts.xml
   def index
-    @alerts = Alert.find(:all, :conditions => ['created_at >= ?', 1.minute.ago.to_s(:db)], :limit => 100, :include => [ { :source_host => :city }, { :destination_host => :city }] )
+    @alerts = Alert.find(:all, :conditions => ['created_at >= ?', 1.minutes.ago.to_s(:db)], :limit => 100, :include => [ { :source_host => :city }, { :destination_host => :city }] )
 
-    source_hosts      = @alerts.collect { |a| a.source_host }
-    destination_hosts = @alerts.collect { |a| a.destination_host } 
-  
-    # Fortunately, these will always line up since city will always be undef for both or neither
-    # There's got to be a better way: FIXME 
-    
-    latitudes  = source_hosts.collect { |h| h.city.lat if !h.city.nil? }.compact.sort
-    longitudes = source_hosts.collect { |h| h.city.long if !h.city.nil? }.compact.sort
+    latitudes   = Array.new
+    longitudes  = Array.new
+    markers     = Array.new
+    lines       = Array.new
 
+    @alerts.each do |a|
+      next if a.source_host.city.nil? || a.destination_host.city.nil? # Just in case there's a missing city
+      source_coords = [a.source_host.city.lat, a.source_host.city.long]
+      dest_coords   = [a.destination_host.city.lat, a.destination_host.city.long]
+      markers << GMarker.new([source_coords[0], source_coords[1]])
+      markers << GMarker.new([dest_coords[0], dest_coords[1]])
+      latitudes << source_coords[0]
+      latitudes << dest_coords[0]
+      longitudes << source_coords[1]
+      longitudes << dest_coords[1]
+      lines << GPolyline.new([source_coords, dest_coords])
+    end
     @map = GMap.new("map_div")
     @map.control_init(:large_map => true,:map_type => true)
     if (latitudes.count > 0)  
@@ -23,16 +31,14 @@ class AlertsController < ApplicationController
       @map.center_zoom_init([40.713956, -0.156250],2)
     end 
 
-    markers = Array.new
-    latitudes.each_with_index do | latitude, index |
-      markers << GMarker.new([latitude, longitudes[index]])  
+    markers.each do |m|
+      @map.overlay_init(m)
     end
 
-    managed_markers = ManagedMarker.new(markers, 3)
+    lines.each do |l|
+      @map.overlay_init(l)
+    end
 
-    mm = GMarkerManager.new(@map,:managed_markers => [managed_markers])
-    @map.declare_init(mm,"mgr")
-    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @alerts }
