@@ -4,7 +4,8 @@ require 'geoip_city'
 g = GeoIPCity::Database.new(RAILS_ROOT + '/lib/GeoLiteCity.dat')
 
 File.open("data/alerts").each do |line|
-  line.scan(/^(.*?)\s\s\[\*\*\]\s\[.*?\]\s\s\<.*?\>\s(.*?)\s\[.*?\]\s\[.*?\]\s\[.*?\]\s\{(.*?)\}\s(.*?)\:(.*?)\s\-\>\s(.*?)\:(.*?)$/) do |time, desc, transport, src_ip, src_port, dest_ip, dest_port|
+  #line.scan(/^(.*?)\s\s\[\*\*\]\s\[.*?\]\s\s\<.*?\>\s(.*?)\s\[.*?\]\s\[.*?\]\s\[.*?\]\s\{(.*?)\}\s(.*?)\:(.*?)\s\-\>\s(.*?)\:(.*?)$/) do |time, desc, transport, src_ip, src_port, dest_ip, dest_port|
+  line.scan(/^(.*?)\s\s\[\*\*\]\s\[.*?\]\s\s\<.*?\>\s(.*?)\s\[.*?\].*?\s\{(.*?)\}\s(.*?)\:(.*?)\s\-\>\s(.*?)\:(.*?)$/) do |time, desc, transport, src_ip, src_port, dest_ip, dest_port|
 
     agent    = Agent.find_or_create_by_key( :key => "TESTKEY" )
     reporter = Host.find_or_create_by_ip_address( :ip_address => "127.0.0.1" )
