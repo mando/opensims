@@ -1,38 +1,3 @@
 <%= GMap.header %>
 <%= @map.to_html %>
 <%= @map.div(:width => 1024, :height => 768) %>
-
-<h1>Listing alerts</h1>
-
-<table>
-  <tr>
-    <th>Source host</th>
-    <th>Source host port</th>
-    <th>Dest host</th>
-    <th>Dest host port</th>
-    <th>Alert time</th>
-    <th>Reporting host</th>
-    <th>Agent</th>
-    <th>Snort rule</th>
-  </tr>
-
-<% for alert in @alerts %>
-  <tr>
-    <td><%=h alert.source_host_id %></td>
-    <td><%=h alert.source_host_port %></td>
-    <td><%=h alert.dest_host_id %></td>
-    <td><%=h alert.dest_host_port %></td>
-    <td><%=h alert.alert_time %></td>
-    <td><%=h alert.reporting_host_id %></td>
-    <td><%=h alert.agent_id %></td>
-    <td><%=h alert.snort_rule_id %></td>
-    <td><%= link_to 'Show', alert %></td>
-    <td><%= link_to 'Edit', edit_alert_path(alert) %></td>
-    <td><%= link_to 'Destroy', alert, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New alert', new_alert_path %>

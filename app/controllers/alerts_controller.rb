@@ -2,13 +2,14 @@ class AlertsController < ApplicationController
   # GET /alerts
   # GET /alerts.xml
   def index
-    @alerts = Alert.find(:all, :conditions => ['created_at >= ?', 1.minute.ago.to_s(:db)], :limit => 10, :include => [ { :source_host => :city }, { :destination_host => :city }] )
+    @alerts = Alert.find(:all, :conditions => ['created_at >= ?', 1.minute.ago.to_s(:db)], :limit => 100, :include => [ { :source_host => :city }, { :destination_host => :city }] )
 
     source_hosts      = @alerts.collect { |a| a.source_host }
     destination_hosts = @alerts.collect { |a| a.destination_host } 
   
     # Fortunately, these will always line up since city will always be undef for both or neither
     # There's got to be a better way: FIXME 
+    
     latitudes  = source_hosts.collect { |h| h.city.lat if !h.city.nil? }.compact.sort
     longitudes = source_hosts.collect { |h| h.city.long if !h.city.nil? }.compact.sort
 
@@ -20,8 +21,17 @@ class AlertsController < ApplicationController
         [latitudes.last,  longitudes.last]])
     else 
       @map.center_zoom_init([40.713956, -0.156250],2)
-    end  
-    #@map.overlay_init(GMarker.new([75.6,-42.467],:title => "Hello", :info_window => "Info! Info!"))
+    end 
+
+    markers = Array.new
+    latitudes.each_with_index do | latitude, index |
+      markers << GMarker.new([latitude, longitudes[index]])  
+    end
+
+    managed_markers = ManagedMarker.new(markers, 3)
+
+    mm = GMarkerManager.new(@map,:managed_markers => [managed_markers])
+    @map.declare_init(mm,"mgr")
     
     respond_to do |format|
       format.html # index.html.erb
