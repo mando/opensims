@@ -27,8 +27,8 @@ class AlertsController < ApplicationController
 		#  Diff = one - other
 		# if different, then
 		#  Diff = one.abs + other.abs
-	  	latDiff = source_coords[0].to_d.abs - dest_coords[0].to_d.abs
-		lngDiff = source_coords[1].to_d.abs + source_coords[1].to_d.abs
+	  	latDiff = getDiff(source_coords[0].to_d,dest_coords[0].to_d)
+		lngDiff = getDiff(source_coords[1].to_d,dest_coords[1].to_d)
 		latMargin = latDiff/3
 		lngMargin = lngDiff/3
 		puts "lat margin=" + latMargin.to_s + ", Diff=" + latDiff.to_s
@@ -69,6 +69,27 @@ class AlertsController < ApplicationController
       format.xml  { render :xml => @alerts }
       format.json { render :text => @alerts.to_json }
     end
+  end
+
+  def getDiff(src,dest)
+  	diff = 0
+  	if (src < 0)
+		if (dest < 0)
+			# both are the same sign
+			diff = src - dest
+		else
+			diff = src.abs + dest.abs
+		end 
+	end
+  	if (src > 0)
+		if (dest > 0)
+			# both are the same sign
+			diff = src - dest
+		else
+			diff = src.abs + dest.abs
+		end 
+	end
+	return diff
   end
 
   # GET /alerts/1
