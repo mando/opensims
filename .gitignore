@@ -6,3 +6,6 @@ doc/api
 doc/app
 *.swp
 lib/scripts/data/*
+db/*.sqlite3
+config/database.yml
+config/gmaps*
