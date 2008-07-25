@@ -2,7 +2,7 @@ class AlertsController < ApplicationController
   # GET /alerts
   # GET /alerts.xml
   def index
-    @alerts = Alert.find(:all, :conditions => ['created_at >= ?', 1.minutes.ago.to_s(:db)], :limit => 100, :include => [ { :source_host => :city }, { :destination_host => :city }] )
+    @alerts = Alert.find(:all, :conditions => ['created_at >= ?', 100000.minutes.ago.to_s(:db)], :limit => 100, :include => [ { :source_host => :city }, { :destination_host => :city }] )
 
     latitudes   = Array.new
     longitudes  = Array.new
@@ -13,13 +13,32 @@ class AlertsController < ApplicationController
       next if a.source_host.city.nil? || a.destination_host.city.nil? # Just in case there's a missing city
       source_coords = [a.source_host.city.lat, a.source_host.city.long]
       dest_coords   = [a.destination_host.city.lat, a.destination_host.city.long]
-      markers << GMarker.new([source_coords[0], source_coords[1]])
-      markers << GMarker.new([dest_coords[0], dest_coords[1]])
-      latitudes << source_coords[0]
-      latitudes << dest_coords[0]
-      longitudes << source_coords[1]
-      longitudes << dest_coords[1]
-      lines << GPolyline.new([source_coords, dest_coords])
+	  source_country_name = a.source_host.city.country.name
+	  dest_country_name = a.destination_host.city.country.name
+      markers << GMarker.new([source_coords[0], source_coords[1]],:title=>a.source_host.city.name + "," + a.source_host.city.country.name,:info_window=>"Source:" + a.source_host.city.name + ", " + a.source_host.city.country.name + "<br/ >Lat: " + a.source_host.city.lat + ", Long:" + a.source_host.city.long)
+      markers << GMarker.new([dest_coords[0], dest_coords[1]],:title=>a.destination_host.city.name + "," + a.destination_host.city.country.name,:info_window=>"Destination:" + a.destination_host.city.name + ", " + a.destination_host.city.country.name + "<br />Lat: " + a.destination_host.city.lat + ", Long:" + a.destination_host.city.long)
+      latitudes << source_coords[0].to_d
+      latitudes << dest_coords[0].to_d
+      longitudes << source_coords[1].to_d
+      longitudes << dest_coords[1].to_d
+	  puts "source coords=" + source_coords[0] + "," + source_coords[1] + ", dest_coords=" + dest_coords[0] + "," + dest_coords[1]
+	  if (source_coords[1].to_d > 100)
+	  	# if the signs are the same, then it should be
+		#  Diff = one - other
+		# if different, then
+		#  Diff = one.abs + other.abs
+	  	latDiff = source_coords[0].to_d.abs - dest_coords[0].to_d.abs
+		lngDiff = source_coords[1].to_d.abs + source_coords[1].to_d.abs
+		latMargin = latDiff/3
+		lngMargin = lngDiff/3
+		puts "lat margin=" + latMargin.to_s + ", Diff=" + latDiff.to_s
+		puts "lng margin=" + lngMargin.to_s + ", Diff=" + lngDiff.to_s
+		lines << GPolyline.new([source_coords,[source_coords[0].to_d - latMargin,source_coords[1].to_d - lngMargin]])
+		lines << GPolyline.new([[source_coords[0].to_d - latMargin,source_coords[1].to_d - lngMargin],[source_coords[0].to_d - (2*latMargin),source_coords[1].to_d - (2*lngMargin)]])
+		lines << GPolyline.new([[source_coords[0].to_d - (2*latMargin),source_coords[1].to_d - (2*lngMargin)],dest_coords])
+      else
+	  	lines << GPolyline.new([source_coords, dest_coords])
+	  end
     end
 
     latitudes.sort!
@@ -31,8 +50,10 @@ class AlertsController < ApplicationController
       @map.center_zoom_on_bounds_init([
         [latitudes.first, longitudes.first], 
         [latitudes.last,  longitudes.last]])
+		puts "Centered on information : lat.first=" + latitudes.first.to_s + ", long.first=" + longitudes.first.to_s  + "--lat.last=" + latitudes.last.to_s + ", long.last=" + longitudes.last.to_s
     else 
-      @map.center_zoom_init([40.713956, -0.156250],2)
+      @map.center_zoom_init([40.713956, -0.156250],3)
+		puts "Centered by default"
     end 
 
     markers.each do |m|
