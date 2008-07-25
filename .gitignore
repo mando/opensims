@@ -1,8 +1,8 @@
 log/*.log
 tmp/**/*
 .DS_Store
+db/*.sqlite3
 doc/api
 doc/app
 *.swp
 lib/scripts/data/*
-db/*.sqlite3
