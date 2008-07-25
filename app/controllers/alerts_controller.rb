@@ -1,6 +1,7 @@
 class AlertsController < ApplicationController
   # GET /alerts
   # GET /alerts.xml
+  
   def index
     @alerts = Alert.find(:all, :conditions => ['created_at >= ?', 1.minutes.ago.to_s(:db)], :limit => 100, :include => [ { :source_host => :city }, { :destination_host => :city }] )
 
